@@ -1,10 +1,7 @@
 import express from 'express';
-import path from 'path';
-import https from "https"
-import http from "http"
 import fs from "fs"
 import { HighscoreDatabase, PlayerData } from './Database';
-
+import cors from "cors";
 import * as yaml from "js-yaml"
 
 const config = yaml.load( fs.readFileSync( __dirname + "/../"+"config.yml","utf8") ) as {hostname:string,port:number}
@@ -13,6 +10,7 @@ const DB = new HighscoreDatabase(__dirname + "/database.db")
 
 DB.tryToCreateTable()
 
+app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 
