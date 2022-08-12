@@ -7,6 +7,7 @@ This API only uses a name and a score to handle the leaderboard.
 This API dont have any kind of security, so only use for prototypes and always only use locally.  
 ## How to use
 
+- setup `config.yml` with your stuff
 - `npm install`
 - `npm run full`
 

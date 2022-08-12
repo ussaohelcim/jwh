@@ -5,6 +5,9 @@ import http from "http"
 import fs from "fs"
 import { HighscoreDatabase, PlayerData } from './Database';
 
+import * as yaml from "js-yaml"
+
+const config = yaml.load( fs.readFileSync( __dirname + "/../"+"config.yml","utf8") ) as {hostname:string,port:number}
 const app = express();
 const DB = new HighscoreDatabase(__dirname + "/database.db")
 
@@ -92,7 +95,6 @@ app.post("/api/add/", async (req, res) => {
 				response.code = 406
 				response.message = `Git gud. This player already have a better score`
 				res.status(406).json(response)
-				// res.status(406).send("git gud")
 			}
 		}
 		else{
@@ -108,6 +110,6 @@ app.get("*",async (req, res) => {
 	res.status(404).send("404")
 })
 
-app.listen(9999, () => {
-	console.log(`running at http://localhost:${9999}/api/`)
-})
+app.listen(config.port, config.hostname, () => {
+	console.log(`running at http://${config.hostname}:${config.port}/api/`)
+});
